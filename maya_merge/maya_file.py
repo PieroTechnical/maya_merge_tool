@@ -7,7 +7,7 @@ from typing import List
 def new(force: bool = False):
     """
     Creates a new file in Maya. If 'force' is not True, it prompts the
-    user with a dialog to confirm the action,warning that it will
+    user with a dialog to confirm the action, warning that it will
     discard all unsaved progress.
 
     Parameters:
