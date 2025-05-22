@@ -1,5 +1,6 @@
 import maya.cmds as cmds
 import maya.mel as mel
+from .logger import log
 
 
 def delete_namespace_and_contents(namespace: str):
@@ -33,7 +34,7 @@ def delete_namespace_and_contents(namespace: str):
         try:
             cmds.namespace(removeNamespace=namespace)
         except RuntimeError as e:
-            print(f"Couldn't remove namespace: {namespace}: {e}")
+            log.error(f"Couldn't remove namespace: {namespace}: {e}")
 
 
 def delete_foreign_namespaces():

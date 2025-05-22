@@ -4,51 +4,54 @@ import platform
 import errno
 import stat
 
-# Constants
-MODULE_NAME = "maya_merge"
+MOD_FILENAME = "maya_merge_module.mod"
+MODULE_FOLDER_NAME = "maya_merge_module"
+SOURCE_FOLDER = "modules"
 
 def main():
-    print_header("MayaMerge Tool Installation")
-    maya_script_path = find_maya_script_path()
-    if not maya_script_path:
-        maya_script_path = input(
-            "Maya scripts directory not found. Please enter the path manually: "
-        )
+    print_header("MayaMerge Tool Installer")
 
-        if not os.path.exists(maya_script_path):
-            print("ERROR: Invalid path provided. Installation aborted.")
+    modules_path = find_maya_modules_path()
+    if not modules_path:
+        modules_path = input("Maya modules directory not found. Enter manually: ")
+        if not os.path.exists(modules_path):
+            print("ERROR: Invalid path. Installation aborted.")
             return
 
-    # Prepare the paths for the module and target folder
-    module_path = os.path.join(os.path.dirname(__file__), MODULE_NAME)
-    target_folder = os.path.join(
-        maya_script_path, os.path.basename(module_path))
+    repo_root = os.path.dirname(__file__)
+    source_root = os.path.join(repo_root, SOURCE_FOLDER)
 
-    # Check and copy the folder
-    check_and_copy_folder(module_path, target_folder)
+    mod_file_src = os.path.join(source_root, MOD_FILENAME)
+    payload_src = os.path.join(source_root, MODULE_FOLDER_NAME)
 
-    print("\n")  # Prints a new line at the end, looks nicer in the terminal
+    mod_file_dest = os.path.join(modules_path, MOD_FILENAME)
+    payload_dest = os.path.join(modules_path, MODULE_FOLDER_NAME)
+
+    if os.path.exists(mod_file_dest) or os.path.exists(payload_dest):
+        response = input("Existing installation found. Overwrite? (yes/no): ")
+        if response.strip().lower() != "yes":
+            print("Installation aborted.")
+            return
+
+    copy_file(mod_file_src, mod_file_dest)
+    copy_folder(payload_src, payload_dest)
+
+    print("\n✅ Installed successfully:")
+    print(f"• {mod_file_dest}")
+    print(f"• {payload_dest}")
 
 
-def find_maya_script_path():
+def find_maya_modules_path():
     if platform.system() == "Windows":
-        return os.path.join(
-            os.environ.get("USERPROFILE", ""), "Documents", "maya", "scripts"
-        )
-    elif platform.system() in ["Linux", "Darwin"]:  # Darwin is macOS
-        return os.path.join(os.environ.get("HOME", ""), "maya", "scripts")
+        return os.path.join(os.environ["USERPROFILE"], "Documents", "maya", "modules")
+    elif platform.system() in ("Darwin", "Linux"):
+        return os.path.join(os.environ["HOME"], "maya", "modules")
     return None
 
 
-def check_and_copy_folder(src, dest):
-    if os.path.exists(dest):
-        response = input(
-            "Folder already exists. Do you want to overwrite?\nEnter (yes/no): ")
-        if response.lower() != "yes":
-            print("WARNING: Installation aborted by the user.")
-            return
-    copy_folder(src, dest)
-    print(f"SUCCESS: MayaMerge Tool successfully installed to {dest}")
+def copy_file(src, dest):
+    os.makedirs(os.path.dirname(dest), exist_ok=True)
+    shutil.copy2(src, dest)
 
 
 def copy_folder(src, dest):
@@ -57,17 +60,14 @@ def copy_folder(src, dest):
             os.chmod(path, stat.S_IWRITE)
             func(path)
         else:
-            raise exc_info[1]
-
+            raise
     if os.path.exists(dest):
-        shutil.rmtree(dest, onexc=handle_remove_readonly)
+        shutil.rmtree(dest, onerror=handle_remove_readonly)
     shutil.copytree(src, dest)
 
 
 def print_header(message):
-    print(f"\n{'=' * len(message)}")
-    print(message)
-    print(f"{'=' * len(message)}\n")
+    print(f"\n{'=' * len(message)}\n{message}\n{'=' * len(message)}\n")
 
 
 if __name__ == "__main__":

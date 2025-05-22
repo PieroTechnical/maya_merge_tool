@@ -1,7 +1,7 @@
 from . import maya_file
 from . import maya_cleanup
 from . import maya_nodes
-
+from .logger import log
 
 def merge(asset_name: str, target_folder: str = "", reset_pivots: bool = False):
     """
@@ -13,6 +13,8 @@ def merge(asset_name: str, target_folder: str = "", reset_pivots: bool = False):
         target_folder (str): Path to the folder containing .ma files.
         reset_pivots (bool): Determines whether to reset the pivots.
     """
+    log.info(f"Merging asset '{asset_name}' from: {target_folder}")
+
     maya_file.new()
     maya_file.import_all_from_directory(target_folder)
 
@@ -25,6 +27,8 @@ def merge(asset_name: str, target_folder: str = "", reset_pivots: bool = False):
 
     maya_nodes.clear_selection()
     maya_cleanup.delete_foreign_namespaces()
+
+    log.info(f"Merge complete")
 
 
 def _extract_and_cleanup_meshes(nodes, asset_name, reset_pivots):

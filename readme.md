@@ -1,89 +1,93 @@
-# MayaMerge Tool Installation and Usage Guide
+# MayaMerge Tool – Module Installation Guide
 
-## Introduction
+## 🧩 Introduction
 
-Welcome to the MayaMerge Tool Installation and Usage Guide. This tool
-is designed to simplify the process of merging
-multiple Maya ASCII (.ma) files into a single, clean, production-ready
-asset. The tool ensures that all meshes conform to naming conventions,
-have transformations frozen, and are devoid of unnecessary nodes or
-history, streamlining the workflow in Autodesk Maya 2024.
+**MayaMerge Tool** simplifies the process of merging multiple Maya ASCII (`.ma`) files into a single, clean, production-ready asset. Built for Autodesk Maya 2024+, it ensures:
 
-## Prerequisites
+- Correct naming conventions  
+- Frozen transformations  
+- Deleted construction history  
+- Namespace cleanup  
+- Default lambert1 material applied  
 
-Before installing and using this tool, please ensure you have:
+---
 
-- Autodesk Maya 2024 installed on your system
+## 🚀 What's New
 
-## Simple Installation (may require administrator privileges)
+- Installs as a proper **Maya module**
+- Shelf button is automatically created on launch
+- Clean log output in the script editor
 
-### Install The Tool
+---
 
-- Download and extract `maya_merge_tool.zip` anywhere on your computer
-- Run `__installer__.bat`
-- Follow the instructions in the command window
-- Start (or restart) Maya 2024
-
-### Install the Shelf
-
-- Drag and drop `maya_shelf.py` from `maya_merge_tool` into the
-  Maya window to install or update the shelf
-
-## Advanced Installation (skip if you completed the previous step)
+## 📦 Installation
 
 ### Step 1: Download the Tool
 
-- Download the file `maya_merge_tool.zip`
+[📥 Click here to download the latest version (ZIP)](https://github.com/PieroTechnical/maya_merge_tool/archive/refs/heads/main.zip)
 
-### Step 2: Extract the Tool
+Once downloaded, extract the contents anywhere on your computer.
 
-- Locate and extract `maya_merge` from `maya_merge_tool.zip` file
-  to a valid maya scripts path (ie.):
-  `C:\Users\<username>\Documents\maya\scripts`
-- Ensure `maya_merge` is correctly located in the `scripts` folder
+### Step 2: Run the Installer
 
-### Step 3: Launch Maya
+Double-click the installer appropriate for your operating system:
 
-- Start (or restart) Maya 2024
+- **Windows**: `__installer__.bat`
+- **macOS/Linux**: `__installer__.sh`
 
-### Install the Shelf
+The tool will be automatically installed into your Maya modules folder.
 
-- Drag and drop `maya_shelf.py` from `maya_merge` into the
-  Maya window to install or update the shelf
+---
 
-## Usage
+## ▶ Launch Maya
 
-### Step 1: Launch the Tool
+Restart Maya 2024. You’ll see a new shelf tab labeled **MergeTool**. Click the icon to launch the UI.
 
-- Click on the MayaMerge Tool icon in the 'PieroTechnical' shelf to
-  open the user interface
+---
 
-### Step 2: Configure the Tool
+## 🛠️ Usage
 
-- In the tool's interface, enter the desired asset name in the
-  `<asset_name>` field
-- Select the folder containing your .ma files by using the
-  `Select Folder` button
+### 1. Launch the Tool
 
-### Step 3: Execute the Merge
+Click the **MayaMerge** icon from the `MergeTool` shelf.
 
-- Once the asset name is specified and the folder is selected, click the
-  `Merge` button
-- The tool will process all .ma files in the selected folder, merging
-  only the polygon meshes under groups named `geo_GRP`
-- Each mesh will be renamed according to the `C_<asset_name>####_GEO`
-  convention, where #### represents a sequential number
-- All meshes will be parented to a new group named `<asset_name>_GRP`,
-  positioned at the world level
+### 2. Configure
 
-### Step 4: Verify the Output
+- Enter an asset name (e.g. `MarsRover`)
+- Select a folder containing `.ma` files
 
-- Check the `<asset_name>_GRP` in the Outliner to ensure all meshes are
-  correctly merged and named
-- Verify that no unnecessary nodes, including shaders, remain in the
-  scene and that the default lambert1 material is applied
+### 3. Merge
 
-## Support
+Click **Merge**. The tool will:
 
-For any issues related to installation or usage of the MayaMerge Tool,
-please contact the creator at `support@pierotechnical.com`
+- Import all `.ma` files from the folder
+- Find meshes under `geo_GRP`
+- Rename them as `C_<asset_name>####_GEO`
+- Parent them under a group named `C_<asset_name>_GRP`
+- Clean transforms, delete history, and remove namespaces
+
+### 4. Review
+
+- Check the Outliner for `C_<asset_name>_GRP`
+- Verify naming, grouping, and cleanup
+
+---
+
+## ❌ Uninstallation
+
+1. Go to:
+
+   `C:\Users\<your_username>\Documents\maya\modules\`
+
+2. Delete:
+   - `maya_merge_module.mod`
+   - `maya_merge_module\`
+
+3. Restart Maya
+
+---
+
+## 📫 Support
+
+For questions or help, contact:  
+📧 **support@pierotechnical.com**

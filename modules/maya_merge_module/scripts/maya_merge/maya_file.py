@@ -2,6 +2,7 @@ import maya.cmds as cmds
 import glob
 import os
 from typing import List
+from .logger import log
 
 
 def new(force: bool = False):
@@ -28,10 +29,10 @@ def new(force: bool = False):
             dismissString="No",
         )
         if result == "No":
-            print("User canceled the new file operation.")
+            ("User canceled the new file operation.")
             return
     cmds.file(newFile=True, force=True)
-    print("New file created.")
+    log.info("New file created.")
 
 
 def import_files(files: List[str]):
@@ -44,12 +45,13 @@ def import_files(files: List[str]):
     """
     for file in files:
         if ".ma" not in file.lower():
-            print(f"{file} does not have the correct file extension, ignoring")
+            log.warning(
+                f"{file} does not have the correct file extension, ignoring")
             continue
         try:
             cmds.file(file, i=1, namespace="import")
         except Exception as e:
-            print(f"Exception: Couldn't import file {file}: {e}")
+            log.error(f"Exception: Couldn't import file {file}: {e}")
 
 
 def import_all_from_directory(target_folder: str):

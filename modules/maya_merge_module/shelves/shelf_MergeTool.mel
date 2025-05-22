@@ -1,0 +1,40 @@
+// shelf_MergeTool.mel
+//
+// Creates or refreshes the “MergeTool” shelf tab with a single button.
+// File name and proc name must BOTH be shelf_MergeTool for Maya to call it.
+
+global proc shelf_MergeTool()
+{
+    /* ------------------------------------------------------------------ */
+    global string $gShelfTopLevel;
+
+    // Create the tab if it’s missing.
+    if (!`shelfLayout -exists "MergeTool"`)
+    {
+        setParent $gShelfTopLevel;
+        shelfLayout -cellWidth 32 -cellHeight 32 "MergeTool";
+    }
+
+    // Remove any old buttons so hot-reloads don’t duplicate them.
+    string $kids[] = `shelfLayout -q -ca "MergeTool"`;
+    if (size($kids))
+        deleteUI $kids;
+
+    /* ------------------------------------------------------------------
+       Button: opens the python UI.
+       -sourceType "python" means the string is executed as Python
+         exactly as written.
+       Newlines are optional; semicolons separate Python statements.
+    ------------------------------------------------------------------ */
+    shelfButton
+        -parent       "MergeTool"
+        -annotation   "Open MayaMerge UI"
+        -image        "merge_tool.png"        // 32-px icon in icons/
+        -style        "iconOnly"
+        -sourceType   "python"
+        -command      "import importlib, maya_merge_tool.ui as _ui; importlib.reload(_ui); _ui.show()";
+        /*                      ^                                              ^                       ^
+                               one long string -------------------------------/                        |
+                               terminate MEL statement here -------------------------------------------/        */
+}
+/* ------------------------------------------------------------------ */
