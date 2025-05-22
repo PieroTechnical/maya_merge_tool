@@ -125,7 +125,7 @@ class MayaMergeUI(QWidget):
         )
 
 
-def launch():
+def show():
     """Instantiate and display the MayaMerge UI."""
     global maya_merge_ui
     try:
