@@ -4,8 +4,8 @@ import platform
 import errno
 import stat
 
-MOD_FILENAME = "maya_merge_module.mod"
-MODULE_FOLDER_NAME = "maya_merge_module"
+MOD_FILENAME = "maya_merge.mod"
+MODULE_FOLDER_NAME = "maya_merge"
 SOURCE_FOLDER = "modules"
 
 def main():

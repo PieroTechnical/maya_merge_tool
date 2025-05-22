@@ -32,7 +32,7 @@ global proc shelf_MergeTool()
         -image        "merge_tool.png"        // 32-px icon in icons/
         -style        "iconOnly"
         -sourceType   "python"
-        -command      "import importlib, maya_merge_tool.ui as _ui; importlib.reload(_ui); _ui.show()";
+        -command      "import importlib, maya_merge.ui as _ui; importlib.reload(_ui); _ui.show()";
         /*                      ^                                              ^                       ^
                                one long string -------------------------------/                        |
                                terminate MEL statement here -------------------------------------------/        */

@@ -1,4 +1,4 @@
-+ maya_merge_tool 1.0 maya_merge_module
++ maya_merge_tool 1.0 maya_merge
 PATH+:=scripts
 PYTHONPATH+:=scripts
 ICONPATH+:=icons
